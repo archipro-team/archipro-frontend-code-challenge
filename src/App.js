@@ -18,11 +18,12 @@ class App extends Component {
     sortAsc : true
   }
 
+  //set search box input to state
   setSearch = (event) => {
     this.setState({search:event.target.value.toLowerCase()});
   }
 
-
+  //compare function to sort data by name
   comparefunction = (a,b) => {
     let i = this.state.sortAsc ? -1 : 1; 
       var x = a.name.toLowerCase(); 
@@ -32,6 +33,7 @@ class App extends Component {
       return 0;
     }
 
+  //sort data - toggle between ascending or descending  
   toggleSort = () => {
     let sortedData = this.state.data.slice().sort(this.comparefunction);
     this.setState(prevState=>({sortAsc : !prevState.sortAsc, data : sortedData}));
@@ -46,6 +48,7 @@ class App extends Component {
           <tr>
             {/* Heading */}
             <th>USERS</th>
+
             <th colSpan="2">
             {/*Search Input box*/}
               <InputGroup style={{maxWidth:"450px", float:"right"}}>
@@ -53,16 +56,19 @@ class App extends Component {
                 <Input placeholder="Name..." onChange={this.setSearch}/>{/*Search Input box*/}
               </InputGroup>
             </th>
+
           </tr>
           <tr>
-            <th>Name <FontAwesomeIcon icon={faSort} onClick={this.toggleSort} /></th>
+            <th>Name <FontAwesomeIcon icon={faSort} onClick={this.toggleSort} className="sortIcon"/></th>
             <th>Email</th>
             <th>Contact Number</th>
           </tr>
         </thead>
+
         <TransitionGroup component="tbody">
           {this.getRow()}
         </TransitionGroup>
+        
       </Table>
     );
   }
