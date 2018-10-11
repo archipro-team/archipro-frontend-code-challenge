@@ -12,12 +12,30 @@ class App extends Component {
 
   state={
     search : "",
-    data : data
+    data : data,
+    sortAsc : true
   }
 
   setSearch = (event) => {
     this.setState({search:event.target.value.toLowerCase()});
   }
+
+
+  comparefunction = (a,b) => {
+    let i = this.state.sortAsc ? -1 : 1; 
+      var x = a.name.toLowerCase(); 
+      var y = b.name.toLowerCase(); 
+      if (x < y)  return -1*i;
+      if (x > y)  return 1*i;    
+      return 0;
+    }
+
+  toggleSort = () => {
+    let sortedData = this.state.data.slice().sort(this.comparefunction);
+    this.setState(prevState=>({sortAsc : !prevState.sortAsc, data : sortedData}));
+  }
+
+
 
   getTable() {
     return (
@@ -35,7 +53,7 @@ class App extends Component {
             </th>
           </tr>
           <tr>
-            <th>Name</th>
+            <th onClick={this.toggleSort}>Name</th>
             <th>Email</th>
             <th>Contact Number</th>
           </tr>

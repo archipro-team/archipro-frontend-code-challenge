@@ -29,7 +29,7 @@ class ViewPerson extends Component {
            {this.props.about}
           </ModalBody>
           <ModalFooter>
-            {this.props.address} <br /> 
+            {this.props.address}
           </ModalFooter>
         </Modal>
       </div>
