@@ -8,6 +8,14 @@ import logo from './archipro_dev.webp';
 
 class App extends Component {
 
+  state={
+    search : "",
+    data : data
+  }
+
+  setSearch = (event) => {
+    this.setState({search:event.target.value.toLowerCase()});
+  }
 
   getTable() {
     return (
@@ -18,7 +26,7 @@ class App extends Component {
             <th colSpan="2">
               <InputGroup style={{maxWidth:"450px", float:"right"}}>
                 <InputGroupAddon addonType="prepend">Search</InputGroupAddon>
-                <Input placeholder="Name..." />  {/*Search Input*/}
+                <Input placeholder="Name..." onChange={this.setSearch}/>  {/*Search Input box*/}
               </InputGroup>
             </th>
           </tr>
@@ -36,7 +44,11 @@ class App extends Component {
   }
 
   getRow() {
-    return data.map(
+    // search filter
+    let filteredData = this.state.data.filter(data => data.name.toLowerCase().indexOf(this.state.search)!==-1);
+    
+    //return filtered results
+    return filteredData.map(
       ({ _id, name, email, phone }) => (
         <tr key={_id}>
           <td>{name}</td>
