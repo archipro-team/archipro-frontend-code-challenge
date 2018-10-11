@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Table } from 'reactstrap';
+import { Container, Row, Col, Table, InputGroup, InputGroupAddon, Input } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import './App.css';
@@ -13,6 +13,15 @@ class App extends Component {
     return (
       <Table className="App-table">
         <thead>
+          <tr>
+            <th>USERS </th>     {/* Heading */}
+            <th colSpan="2">
+              <InputGroup style={{maxWidth:"450px", float:"right"}}>
+                <InputGroupAddon addonType="prepend">Search</InputGroupAddon>
+                <Input placeholder="Name..." />  {/*Search Input*/}
+              </InputGroup>
+            </th>
+          </tr>
           <tr>
             <th>Name</th>
             <th>Email</th>
