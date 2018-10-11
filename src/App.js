@@ -23,11 +23,13 @@ class App extends Component {
       <Table className="App-table">
         <thead>
           <tr>
-            <th>USERS </th>     {/* Heading */}
+            {/* Heading */}
+            <th>USERS</th>
             <th colSpan="2">
+            {/*Search Input box*/}
               <InputGroup style={{maxWidth:"450px", float:"right"}}>
                 <InputGroupAddon addonType="prepend">Search</InputGroupAddon>
-                <Input placeholder="Name..." onChange={this.setSearch}/>  {/*Search Input box*/}
+                <Input placeholder="Name..." onChange={this.setSearch}/>{/*Search Input box*/}
               </InputGroup>
             </th>
           </tr>
@@ -56,10 +58,10 @@ class App extends Component {
             timeout={350}
             classNames="fade"
         >
-        <tr>
-          <td><div>{name} </div></td>
-          <td><div>{email}</div></td>
-          <td><div>{phone}</div></td>
+        <tr className="personNode">
+        <td><div>{name}</div></td>
+        <td><div>{email}</div></td>
+        <td><div>{phone}</div></td>
         </tr>
         </CSSTransition>
       )
