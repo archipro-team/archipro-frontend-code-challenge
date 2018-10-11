@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Table, InputGroup, InputGroupAddon, Input } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {CSSTransition, TransitionGroup} from 'react-transition-group'
 
 import './App.css';
 import data from './api/data.json';
@@ -36,9 +37,9 @@ class App extends Component {
             <th>Contact Number</th>
           </tr>
         </thead>
-        <tbody>
+        <TransitionGroup component="tbody">
           {this.getRow()}
-        </tbody>
+        </TransitionGroup>
       </Table>
     );
   }
@@ -50,11 +51,17 @@ class App extends Component {
     //return filtered results
     return filteredData.map(
       ({ _id, name, email, phone }) => (
-        <tr key={_id}>
-          <td>{name}</td>
-          <td>{email}</td>
-          <td>{phone}</td>
+        <CSSTransition
+            key={_id} 
+            timeout={350}
+            classNames="fade"
+        >
+        <tr>
+          <td><div>{name} </div></td>
+          <td><div>{email}</div></td>
+          <td><div>{phone}</div></td>
         </tr>
+        </CSSTransition>
       )
     )
   }
