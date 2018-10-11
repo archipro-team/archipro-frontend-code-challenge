@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Container, Row, Col, Table, InputGroup, InputGroupAddon, Input } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {CSSTransition, TransitionGroup} from 'react-transition-group'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSort } from '@fortawesome/free-solid-svg-icons'
 
 import './App.css';
 import data from './api/data.json';
@@ -53,7 +55,7 @@ class App extends Component {
             </th>
           </tr>
           <tr>
-            <th onClick={this.toggleSort}>Name</th>
+            <th>Name <FontAwesomeIcon icon={faSort} onClick={this.toggleSort} /></th>
             <th>Email</th>
             <th>Contact Number</th>
           </tr>
