@@ -6,6 +6,7 @@ import {CSSTransition, TransitionGroup} from 'react-transition-group'
 import './App.css';
 import data from './api/data.json';
 import logo from './archipro_dev.webp';
+import ViewPerson from '../src/components/ViewPerson'
 
 class App extends Component {
 
@@ -52,14 +53,23 @@ class App extends Component {
     
     //return filtered results
     return filteredData.map(
-      ({ _id, name, email, phone }) => (
+      ({ _id, name, email, phone, company, about, address, picture, isActive }) => (
         <CSSTransition
             key={_id} 
             timeout={350}
             classNames="fade"
         >
         <tr className="personNode">
-        <td><div>{name}</div></td>
+        <td>
+          <ViewPerson 
+                  name={name} 
+                  company={company} 
+                  about={about} 
+                  picture={picture}
+                  address={address}
+                  isActive={isActive}
+          />
+        </td>
         <td><div>{email}</div></td>
         <td><div>{phone}</div></td>
         </tr>
