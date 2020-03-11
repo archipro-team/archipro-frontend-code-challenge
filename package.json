@@ -12,6 +12,7 @@
     "react-dom": "^16.5.2",
     "react-scripts": "^3.4.0",
     "reactstrap": "^6.5.0",
+    "styled-components": "^5.0.1",
     "typescript": "^3.8.3"
   },
   "scripts": {
@@ -30,6 +31,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@types/reactstrap": "^8.4.2"
+    "@types/reactstrap": "^8.4.2",
+    "@types/styled-components": "^5.0.1"
   }
 }

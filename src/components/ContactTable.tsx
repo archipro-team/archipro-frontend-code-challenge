@@ -2,6 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import React, { useCallback, useState } from "react";
 import { Table } from "reactstrap";
+import TableHeader from "./TableHeader";
 
 export type Contact = {
   _id: string;
@@ -55,9 +56,24 @@ const ContactTable = ({ data }: ContactTableProps) => {
     <Table className="App-table">
       <thead>
         <tr>
-          <th onClick={onRowClick("name")}>Name</th>
-          <th onClick={onRowClick("email")}>Email</th>
-          <th onClick={onRowClick("phone")}>Contact Number</th>
+          <TableHeader
+            sortOrder={sortKey === "name" ? sortOrder : undefined}
+            onClick={onRowClick("name")}
+          >
+            Name
+          </TableHeader>
+          <TableHeader
+            sortOrder={sortKey === "email" ? sortOrder : undefined}
+            onClick={onRowClick("email")}
+          >
+            Email
+          </TableHeader>
+          <TableHeader
+            sortOrder={sortKey === "phone" ? sortOrder : undefined}
+            onClick={onRowClick("phone")}
+          >
+            Contact Number
+          </TableHeader>
         </tr>
       </thead>
       <tbody>
