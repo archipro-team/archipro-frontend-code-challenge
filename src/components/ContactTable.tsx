@@ -2,7 +2,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import React, { useCallback, useState } from "react";
 import { Table } from "reactstrap";
-import TableHeader from "./TableHeader";
+import TableHeader from "./Table/Header";
+import { pickAll } from "ramda";
 
 export type Contact = {
   _id: string;
@@ -12,12 +13,15 @@ export type Contact = {
 };
 
 export type ContactTableProps = {
+  searchQuery?: string;
   data: Contact[];
 };
 
-const ContactTable = ({ data }: ContactTableProps) => {
+const ContactTable = ({ searchQuery = "", data }: ContactTableProps) => {
   const [sortKey, setSortKey] = useState<keyof Contact | undefined>();
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+
+  const parsedSearchQuery = searchQuery.trim().toLowerCase();
 
   const onRowClick = useCallback(
     (key: keyof Contact) => () => {
@@ -30,6 +34,20 @@ const ContactTable = ({ data }: ContactTableProps) => {
   );
 
   const Rows = useCallback(() => {
+    const dataFilter = (data: Contact) => {
+      const filterProps: Pick<Contact, "name" | "email" | "phone"> = pickAll(
+        ["name", "email", "phone"],
+        data
+      );
+
+      return Object.values(filterProps).some(value =>
+        value
+          .trim()
+          .toLowerCase()
+          .includes(parsedSearchQuery)
+      );
+    };
+
     const sortedData =
       sortKey === undefined
         ? data
@@ -39,9 +57,12 @@ const ContactTable = ({ data }: ContactTableProps) => {
               : b[sortKey].localeCompare(a[sortKey])
           );
 
+    const sortedAndFilteredData =
+      parsedSearchQuery === "" ? sortedData : sortedData.filter(dataFilter);
+
     return (
       <>
-        {sortedData.map(({ _id, name, email, phone }) => (
+        {sortedAndFilteredData.map(({ _id, name, email, phone }) => (
           <tr key={_id}>
             <td>{name}</td>
             <td>{email}</td>
@@ -50,7 +71,7 @@ const ContactTable = ({ data }: ContactTableProps) => {
         ))}
       </>
     );
-  }, [data, sortKey, sortOrder]);
+  }, [data, parsedSearchQuery, sortKey, sortOrder]);
 
   return (
     <Table className="App-table">
