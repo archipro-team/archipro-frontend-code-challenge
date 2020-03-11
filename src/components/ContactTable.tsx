@@ -4,6 +4,7 @@ import React, { useCallback, useState } from "react";
 import { Table } from "reactstrap";
 import TableHeader from "./Table/Header";
 import { pickAll } from "ramda";
+import MatchHighlight from "./Table/MatchHighlight";
 
 export type Contact = {
   _id: string;
@@ -60,13 +61,23 @@ const ContactTable = ({ searchQuery = "", data }: ContactTableProps) => {
     const sortedAndFilteredData =
       parsedSearchQuery === "" ? sortedData : sortedData.filter(dataFilter);
 
+    const QueryMatchHighLight = ({ children }: { children: string }) => (
+      <MatchHighlight highlight={parsedSearchQuery}>{children}</MatchHighlight>
+    );
+
     return (
       <>
         {sortedAndFilteredData.map(({ _id, name, email, phone }) => (
           <tr key={_id}>
-            <td>{name}</td>
-            <td>{email}</td>
-            <td>{phone}</td>
+            <td>
+              <QueryMatchHighLight>{name}</QueryMatchHighLight>
+            </td>
+            <td>
+              <QueryMatchHighLight>{email}</QueryMatchHighLight>
+            </td>
+            <td>
+              <QueryMatchHighLight>{phone}</QueryMatchHighLight>
+            </td>
           </tr>
         ))}
       </>
