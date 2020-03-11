@@ -7,6 +7,12 @@ import SearchBox from "./components/SearchBox";
 import data from "./api/data.json";
 import logo from "./archipro_dev.webp";
 import ContactTable from "./components/ContactTable";
+import styled from "styled-components";
+
+const StyledSearchBox = styled(SearchBox)`
+  width: 100%;
+  margin-bottom: 15px;
+`;
 
 const App = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -20,7 +26,11 @@ const App = () => {
         <Container>
           <Row>
             <Col>
-              <SearchBox value={searchQuery} onValueChange={setSearchQuery} />
+              <StyledSearchBox
+                placeholder="Search"
+                value={searchQuery}
+                onValueChange={setSearchQuery}
+              />
             </Col>
           </Row>
           <Row>
