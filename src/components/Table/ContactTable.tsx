@@ -2,9 +2,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import React, { useCallback, useState } from "react";
 import { Table } from "reactstrap";
-import TableHeader from "./Table/Header";
+import TableHeader from "./Header";
 import { pickAll } from "ramda";
-import MatchHighlight from "./Table/MatchHighlight";
+import MatchHighlight from "../MatchHighlight";
 
 export type Contact = {
   _id: string;
@@ -34,8 +34,8 @@ const ContactTable = ({ searchQuery = "", data }: ContactTableProps) => {
     [sortKey]
   );
 
-  const Rows = useCallback(() => {
-    const dataFilter = (data: Contact) => {
+  const dataFilter = useCallback(
+    (data: Contact) => {
       const filterProps: Pick<Contact, "name" | "email" | "phone"> = pickAll(
         ["name", "email", "phone"],
         data
@@ -47,8 +47,11 @@ const ContactTable = ({ searchQuery = "", data }: ContactTableProps) => {
           .toLowerCase()
           .includes(parsedSearchQuery)
       );
-    };
+    },
+    [parsedSearchQuery]
+  );
 
+  const Rows = useCallback(() => {
     const sortedData =
       sortKey === undefined
         ? data
@@ -82,30 +85,27 @@ const ContactTable = ({ searchQuery = "", data }: ContactTableProps) => {
         ))}
       </>
     );
-  }, [data, parsedSearchQuery, sortKey, sortOrder]);
+  }, [data, dataFilter, parsedSearchQuery, sortKey, sortOrder]);
+
+  const SortByKeyHeader = useCallback(
+    ({ children, keyName }: { children: string; keyName: keyof Contact }) => (
+      <TableHeader
+        sortOrder={keyName === sortKey ? sortOrder : undefined}
+        onClick={onRowClick(keyName)}
+      >
+        {children}
+      </TableHeader>
+    ),
+    [onRowClick, sortKey, sortOrder]
+  );
 
   return (
     <Table className="App-table">
       <thead>
         <tr>
-          <TableHeader
-            sortOrder={sortKey === "name" ? sortOrder : undefined}
-            onClick={onRowClick("name")}
-          >
-            Name
-          </TableHeader>
-          <TableHeader
-            sortOrder={sortKey === "email" ? sortOrder : undefined}
-            onClick={onRowClick("email")}
-          >
-            Email
-          </TableHeader>
-          <TableHeader
-            sortOrder={sortKey === "phone" ? sortOrder : undefined}
-            onClick={onRowClick("phone")}
-          >
-            Contact Number
-          </TableHeader>
+          <SortByKeyHeader keyName="name">Name</SortByKeyHeader>
+          <SortByKeyHeader keyName="email">Email</SortByKeyHeader>
+          <SortByKeyHeader keyName="phone">Contact Number</SortByKeyHeader>
         </tr>
       </thead>
       <tbody>

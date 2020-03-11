@@ -6,7 +6,7 @@ import { Col, Container, Row } from "reactstrap";
 import SearchBox from "./components/SearchBox";
 import data from "./api/data.json";
 import logo from "./archipro_dev.webp";
-import ContactTable from "./components/ContactTable";
+import ContactTable from "./components/Table/ContactTable";
 import styled from "styled-components";
 
 const StyledSearchBox = styled(SearchBox)`
