@@ -15,12 +15,9 @@ class App extends Component {
     users: undefined,
   };
 
-  async componentDidMount() {
+  componentDidMount() {
     const { loadUsers } = this.props;
-
-    // TODO: put this in a try catch block.
-    const users = await loadUsers();
-    this.setState({ users });
+    loadUsers();
   }
 
   getTable() {
@@ -40,7 +37,10 @@ class App extends Component {
 
   getRow() {
     const { users } = this.state;
+
+    // TODO: show a spinner or loader.
     if (!users) return null;
+
     return users.map(({ _id, name, email, phone }) => (
       <tr key={_id}>
         <td>{name}</td>

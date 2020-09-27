@@ -1,6 +1,6 @@
 import { createReducer } from "redux-act";
 
-import { setLoadingStatus } from "./actions";
+import { setLoadingStatus, setUsers } from "./actions";
 
 const Status = Object.freeze({
   None: "NONE",
@@ -20,8 +20,15 @@ const users = createReducer(
       ...state,
       status,
     }),
+    [setUsers.getType()]: (state, { pageNumber, users }) => ({
+      ...state,
+      users: {
+        ...state.users,
+        [pageNumber]: users,
+      },
+    }),
   },
   initialState
 );
 
-export { initialState, users };
+export { initialState, users, Status };
