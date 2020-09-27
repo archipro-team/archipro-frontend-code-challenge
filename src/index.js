@@ -6,7 +6,7 @@ import thunkMiddleware from "redux-thunk";
 
 import reducers from "./ducks";
 import repositories from "./repositories";
-import App from "./App";
+import App from "./pages/userListPage/UserTable";
 import * as serviceWorker from "./serviceWorker";
 
 import "./index.css";

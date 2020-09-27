@@ -3,19 +3,18 @@ import { Container, Row, Col, Table } from "reactstrap";
 import { compose } from "redux";
 import { connect } from "react-redux";
 
-import { loadUsers } from "./ducks/user/thunks";
+import { loadUsers } from "../../ducks/user/thunks";
 import {
   isFetching,
   hasFetched,
   users as allUsers,
-} from "./ducks/user/selectors";
-
-import logo from "./archipro_dev.webp";
+} from "../../ducks/user/selectors";
+import logo from "../../archipro_dev.webp";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.css";
+import "./UserTable.css";
 
-class App extends Component {
+class UserTable extends Component {
   state = {
     users: undefined,
   };
@@ -87,9 +86,4 @@ const mapDispatchToProps = (dispatch) => ({
   loadUsers: () => dispatch(loadUsers()),
 });
 
-export default compose(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )
-)(App);
+export default compose(connect(mapStateToProps, mapDispatchToProps))(UserTable);

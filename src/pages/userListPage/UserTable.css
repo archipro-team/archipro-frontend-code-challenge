@@ -18,15 +18,15 @@
   color: white;
 }
 
-.App-header > img{
+.App-header > img {
   width: 100px;
   height: auto;
 }
 
-.App-content{
+.App-content {
   padding-top: 2em;
 }
 
-.App-table{
+.App-table {
   text-align: left;
 }
