@@ -64,7 +64,6 @@ class UserTable extends Component {
   }
 
   navigateToDetailPage = (id) => {
-    console.log(id);
     const { history } = this.props;
     history.push(`/users/detail/${id}`);
   };
