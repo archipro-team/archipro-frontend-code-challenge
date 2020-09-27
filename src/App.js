@@ -1,13 +1,27 @@
-import React, { Component } from 'react';
-import { Container, Row, Col, Table } from 'reactstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { Component } from "react";
+import { Container, Row, Col, Table } from "reactstrap";
+import { compose } from "redux";
+import { connect } from "react-redux";
 
-import './App.css';
-import data from './api/data.json';
-import logo from './archipro_dev.webp';
+import { loadUsers } from "./ducks/user/thunks";
+
+import logo from "./archipro_dev.webp";
+
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
 
 class App extends Component {
+  state = {
+    users: undefined,
+  };
 
+  async componentDidMount() {
+    const { loadUsers } = this.props;
+
+    // TODO: put this in a try catch block.
+    const users = await loadUsers();
+    this.setState({ users });
+  }
 
   getTable() {
     return (
@@ -19,23 +33,21 @@ class App extends Component {
             <th>Contact Number</th>
           </tr>
         </thead>
-        <tbody>
-          {this.getRow()}
-        </tbody>
+        <tbody>{this.getRow()}</tbody>
       </Table>
     );
   }
 
   getRow() {
-    return data.map(
-      ({ _id, name, email, phone }) => (
-        <tr key={_id}>
-          <td>{name}</td>
-          <td>{email}</td>
-          <td>{phone}</td>
-        </tr>
-      )
-    )
+    const { users } = this.state;
+    if (!users) return null;
+    return users.map(({ _id, name, email, phone }) => (
+      <tr key={_id}>
+        <td>{name}</td>
+        <td>{email}</td>
+        <td>{phone}</td>
+      </tr>
+    ));
   }
 
   render() {
@@ -47,16 +59,24 @@ class App extends Component {
         <main className="App-content">
           <Container>
             <Row>
-              <Col>
-              {this.getTable()}
-              </Col>
+              <Col>{this.getTable()}</Col>
             </Row>
           </Container>
-
         </main>
       </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = (state) => ({});
+
+const mapDispatchToProps = (dispatch) => ({
+  loadUsers: () => dispatch(loadUsers()),
+});
+
+export default compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
+)(App);
