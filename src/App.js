@@ -4,6 +4,11 @@ import { compose } from "redux";
 import { connect } from "react-redux";
 
 import { loadUsers } from "./ducks/user/thunks";
+import {
+  isFetching,
+  hasFetched,
+  users as allUsers,
+} from "./ducks/user/selectors";
 
 import logo from "./archipro_dev.webp";
 
@@ -36,18 +41,22 @@ class App extends Component {
   }
 
   getRow() {
-    const { users } = this.state;
-
+    const { isFetchingUsers, hasFetchedUsers, allUsers } = this.props;
     // TODO: show a spinner or loader.
-    if (!users) return null;
+    if (isFetchingUsers) return null;
 
-    return users.map(({ _id, name, email, phone }) => (
-      <tr key={_id}>
-        <td>{name}</td>
-        <td>{email}</td>
-        <td>{phone}</td>
-      </tr>
-    ));
+    if (hasFetchedUsers) {
+      return allUsers.map(({ _id, name, email, phone }) => (
+        <tr key={_id}>
+          <td>{name}</td>
+          <td>{email}</td>
+          <td>{phone}</td>
+        </tr>
+      ));
+    }
+
+    // TODO: handle error.
+    return null;
   }
 
   render() {
@@ -68,7 +77,11 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = ({ users }) => ({
+  isFetchingUsers: isFetching(users),
+  hasFetchedUsers: hasFetched(users),
+  allUsers: allUsers(users),
+});
 
 const mapDispatchToProps = (dispatch) => ({
   loadUsers: () => dispatch(loadUsers()),
