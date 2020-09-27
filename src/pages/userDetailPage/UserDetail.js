@@ -3,6 +3,7 @@ import { compose } from "redux";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
+import MainPageHoc from "../../hocs/mainPageHoc";
 import { users as allUsers } from "../../ducks/user/selectors";
 
 class UserDetail extends Component {
@@ -25,6 +26,8 @@ const mapStateToProps = ({ users }) => ({
 
 const mapDispatchToProps = (dispatch) => ({});
 
-export default withRouter(
-  compose(connect(mapStateToProps, mapDispatchToProps))(UserDetail)
-);
+export default compose(
+  MainPageHoc,
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps)
+)(UserDetail);

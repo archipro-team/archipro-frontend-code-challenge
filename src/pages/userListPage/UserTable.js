@@ -2,14 +2,15 @@ import React, { Component } from "react";
 import { Container, Row, Col, Table } from "reactstrap";
 import { compose } from "redux";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
+import MainPageHoc from "../../hocs/mainPageHoc";
 import { loadUsers } from "../../ducks/user/thunks";
 import {
   isFetching,
   hasFetched,
   users as allUsers,
 } from "../../ducks/user/selectors";
-import logo from "../../archipro_dev.webp";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./UserTable.css";
@@ -26,7 +27,7 @@ class UserTable extends Component {
 
   getTable() {
     return (
-      <Table className="App-table">
+      <Table className="user-table-table">
         <thead>
           <tr>
             <th>Name</th>
@@ -46,7 +47,11 @@ class UserTable extends Component {
 
     if (hasFetchedUsers) {
       return allUsers.map(({ _id, name, email, phone }) => (
-        <tr key={_id}>
+        <tr
+          className="user-table-row"
+          key={_id}
+          onClick={() => this.navigateToDetailPage(_id)}
+        >
           <td>{name}</td>
           <td>{email}</td>
           <td>{phone}</td>
@@ -58,20 +63,21 @@ class UserTable extends Component {
     return null;
   }
 
+  navigateToDetailPage = (id) => {
+    console.log(id);
+    const { history } = this.props;
+    history.push(`/users/detail/${id}`);
+  };
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-        </header>
-        <main className="App-content">
-          <Container>
-            <Row>
-              <Col>{this.getTable()}</Col>
-            </Row>
-          </Container>
-        </main>
-      </div>
+      <main className="user-table-content">
+        <Container>
+          <Row>
+            <Col>{this.getTable()}</Col>
+          </Row>
+        </Container>
+      </main>
     );
   }
 }
@@ -86,4 +92,8 @@ const mapDispatchToProps = (dispatch) => ({
   loadUsers: () => dispatch(loadUsers()),
 });
 
-export default compose(connect(mapStateToProps, mapDispatchToProps))(UserTable);
+export default compose(
+  MainPageHoc,
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps)
+)(UserTable);
