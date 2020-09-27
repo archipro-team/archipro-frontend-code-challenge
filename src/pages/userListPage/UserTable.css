@@ -1,0 +1,15 @@
+.user-table-content {
+  padding-top: 2em;
+}
+
+.user-table-table {
+  text-align: left;
+}
+
+.user-table-row {
+  cursor: pointer;
+}
+
+.user-table-row:hover {
+  background-color: gainsboro;
+}
