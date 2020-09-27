@@ -6,7 +6,7 @@ import thunkMiddleware from "redux-thunk";
 
 import reducers from "./ducks";
 import repositories from "./repositories";
-import App from "./pages/userListPage/UserTable";
+import Router from "./router";
 import * as serviceWorker from "./serviceWorker";
 
 import "./index.css";
@@ -26,7 +26,7 @@ const store = createAppStore(repositories, reducers);
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <Router />
   </Provider>,
   document.getElementById("root")
 );
