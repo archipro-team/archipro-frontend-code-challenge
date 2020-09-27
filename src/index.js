@@ -6,6 +6,7 @@ import thunkMiddleware from "redux-thunk";
 
 // TODO: need to import typescript and resolve this properly.
 import reducers from "./ducks/index.ts";
+import repositories from "./repositories/index.ts";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
@@ -21,7 +22,7 @@ const createAppStore = (getDependencies, reducers) => {
   );
 };
 
-const store = createAppStore(() => {}, reducers);
+const store = createAppStore(repositories, reducers);
 
 ReactDOM.render(
   <Provider store={store}>
