@@ -4,9 +4,8 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware, combineReducers } from "redux";
 import thunkMiddleware from "redux-thunk";
 
-// TODO: need to import typescript and resolve this properly.
-import reducers from "./ducks/index.ts";
-import repositories from "./repositories/index.ts";
+import reducers from "./ducks";
+import repositories from "./repositories";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
@@ -16,6 +15,7 @@ const createAppStore = (getDependencies, reducers) => {
   const createStoreWithMiddleware = applyMiddleware(
     thunkMiddleware.withExtraArgument(getDependencies)
   )(createStore);
+
   return createStoreWithMiddleware(
     combineReducers(reducers),
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
