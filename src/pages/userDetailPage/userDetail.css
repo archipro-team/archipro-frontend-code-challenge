@@ -1,0 +1,11 @@
+.user-detail-container {
+  padding: 10px;
+}
+.user-detail-info p {
+  margin: 0px;
+  text-align: right;
+}
+
+.user-detail-about {
+  margin-top: 20px;
+}

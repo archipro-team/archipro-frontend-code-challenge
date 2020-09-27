@@ -6,17 +6,44 @@ import { withRouter } from "react-router-dom";
 import MainPageHoc from "../../hocs/mainPageHoc";
 import { users as allUsers } from "../../ducks/user/selectors";
 
+import "./userDetail.css";
+
 class UserDetail extends Component {
-  state = {
-    users: undefined,
+  getUser = () => {
+    const {
+      allUsers,
+      match: {
+        params: { userId },
+      },
+    } = this.props;
+
+    return allUsers.find((user) => user._id === userId);
   };
 
   render() {
-    const { match } = this.props;
+    const user = this.getUser();
 
-    console.log("s");
-    console.log(match);
-    return <div className="App">s</div>;
+    // TODO: should load the user separately if this user does not exist in redux.
+    if (!user) return null;
+
+    const { name, picture, age, email, company, gender, address, about } = user;
+    return (
+      <div className="user-detail-container">
+        <h2>
+          {/* eslint-disable-next-line  */}
+          {name} <img src={picture} alt="profile picture" />
+        </h2>
+
+        <div className="user-detail-info">
+          <p>Age: {age}</p>
+          <p>Email: {email}</p>
+          <p>Company: {company}</p>
+          <p>Gender: {gender}</p>
+          <p>Address: {address}</p>
+        </div>
+        <p className="user-detail-about">{about}</p>
+      </div>
+    );
   }
 }
 
