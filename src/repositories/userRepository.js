@@ -5,13 +5,8 @@ export default class UserRepository {
   getUsers = () => {
     return new Promise((resolve, reject) => {
       resolve(
-        data.map(({ _id, name, email, phone }) => {
-          return {
-            id: _id,
-            name: name,
-            email: email,
-            phone: phone,
-          };
+        data.map((user) => {
+          return user;
         })
       );
     });
