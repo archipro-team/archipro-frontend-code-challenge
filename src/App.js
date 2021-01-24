@@ -9,11 +9,16 @@ import Search from './components/Search';
 
 class App extends Component {
   state = {
-      searchQuery: ""
+      searchQuery: "",
+      searchBy: "name"
   };
 
-  handleSearch = (value) => {
+  handleSearchQueryChange = (value) => {
     this.setState({searchQuery: value});
+  }
+
+  handleSearchByChange = (value) => {
+    this.setState({searchBy: value});
   }
 
   getTable() {
@@ -34,10 +39,10 @@ class App extends Component {
   }
 
   getRow() {
-    const {searchQuery} = this.state;
+    const {searchQuery, searchBy} = this.state;
     let allData = [...data];
     if(searchQuery) {
-      allData = data.filter(item => item.name.toLowerCase().startsWith(searchQuery.toLowerCase()));
+      allData = data.filter(item => item[searchBy].toLowerCase().startsWith(searchQuery.toLowerCase()));
     }
     return allData.map(
       ({ _id, name, email, phone }) => (
@@ -51,7 +56,7 @@ class App extends Component {
   }
 
   render() {
-    const {searchQuery} = this.state;
+    const {searchQuery, searchBy} = this.state;
     return (
       <div className="App">
         <header className="App-header">
@@ -59,7 +64,7 @@ class App extends Component {
         </header>
         <main className="App-content">
           <Container>
-            <Search onChange={this.handleSearch} value={searchQuery} />
+            <Search onSearchQueryChange={this.handleSearchQueryChange} onSearchByChange={this.handleSearchByChange} searchQuery={searchQuery} searchBy={searchBy} />
             <Row>
               <Col>
               {this.getTable()}
