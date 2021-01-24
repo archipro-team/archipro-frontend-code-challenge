@@ -44,6 +44,9 @@ class App extends Component {
     if(searchQuery) {
       allData = data.filter(item => item[searchBy].toLowerCase().startsWith(searchQuery.toLowerCase()));
     }
+
+    if(allData.length === 0) return <tr><td colSpan="3">No Records Found</td></tr>
+
     return allData.map(
       ({ _id, name, email, phone }) => (
         <tr key={_id}>
