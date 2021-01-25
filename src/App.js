@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import { Container, Row, Col, Table } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -13,12 +13,12 @@ class App extends Component {
       searchBy: "name"
   };
 
-  handleSearchQueryChange = (value) => {
-    this.setState({searchQuery: value});
+  handleSearchQueryChange = (searchQuery) => {
+    this.setState({searchQuery});
   }
 
-  handleSearchByChange = (value) => {
-    this.setState({searchBy: value});
+  handleSearchByChange = (searchBy) => {
+    this.setState({searchBy});
   }
 
   getTable() {
@@ -38,16 +38,21 @@ class App extends Component {
     );
   }
 
-  getRow() {
+  getTableData = () => {
     const {searchQuery, searchBy} = this.state;
-    let allData = [...data];
+    let tableData = [...data];
     if(searchQuery) {
-      allData = data.filter(item => item[searchBy].toLowerCase().startsWith(searchQuery.toLowerCase()));
+      tableData = data.filter(item => item[searchBy].toLowerCase().startsWith(searchQuery.toLowerCase()));
     }
+    return tableData;
+  }
 
-    if(allData.length === 0) return <tr><td colSpan="3">No Records Found</td></tr>
+  getRow() {
+    const tableData = this.getTableData();
 
-    return allData.map(
+    if(tableData.length === 0) return <tr><td colSpan="3">No Records Found</td></tr>
+
+    return tableData.map(
       ({ _id, name, email, phone }) => (
         <tr key={_id}>
           <td>{name}</td>
