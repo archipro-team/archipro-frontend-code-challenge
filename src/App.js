@@ -6,6 +6,7 @@ import './App.css';
 import data from './api/data.json';
 import logo from './archipro_dev.webp';
 import Search from './components/Search';
+import TableComponent from './components/TableComponent';
 
 class App extends Component {
   state = {
@@ -21,23 +22,6 @@ class App extends Component {
     this.setState({searchBy});
   }
 
-  getTable() {
-    return (
-      <Table className="App-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Contact Number</th>
-          </tr>
-        </thead>
-        <tbody>
-          {this.getRow()}
-        </tbody>
-      </Table>
-    );
-  }
-
   getTableData = () => {
     const {searchQuery, searchBy} = this.state;
     let tableData = [...data];
@@ -47,24 +31,9 @@ class App extends Component {
     return tableData;
   }
 
-  getRow() {
-    const tableData = this.getTableData();
-
-    if(tableData.length === 0) return <tr><td colSpan="3">No Records Found</td></tr>
-
-    return tableData.map(
-      ({ _id, name, email, phone }) => (
-        <tr key={_id}>
-          <td>{name}</td>
-          <td>{email}</td>
-          <td>{phone}</td>
-        </tr>
-      )
-    )
-  }
-
   render() {
     const {searchQuery, searchBy} = this.state;
+    const tableData = this.getTableData();
     return (
       <div className="App">
         <header className="App-header">
@@ -72,10 +41,13 @@ class App extends Component {
         </header>
         <main className="App-content">
           <Container>
-            <Search onSearchQueryChange={this.handleSearchQueryChange} onSearchByChange={this.handleSearchByChange} searchQuery={searchQuery} searchBy={searchBy} />
+            <Search onSearchQueryChange={this.handleSearchQueryChange} 
+              onSearchByChange={this.handleSearchByChange} 
+              searchQuery={searchQuery} 
+              searchBy={searchBy} />
             <Row>
               <Col>
-              {this.getTable()}
+              <TableComponent tableData={tableData} />
               </Col>
             </Row>
           </Container>

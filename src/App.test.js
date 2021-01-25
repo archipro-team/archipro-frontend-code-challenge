@@ -67,10 +67,3 @@ it('should not filter the data if data not found', ()=>{
   const recievedDataLength = instance.getTableData().length;
   expect(recievedDataLength).toEqual(0);
 });
-
-it('should return the table row data', ()=>{
-  const appComponent = shallow(<App />);
-  const instance = appComponent.instance();
-  const value = instance.getRow();
-  expect(value.length).toBeGreaterThan(0);
-});
